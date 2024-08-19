@@ -10,24 +10,23 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 
-class AboutCommandExecutor: CommandExecutor, TabCompleter {
-    private val aboutMsg = "<gold><b>RADIO LAMP ENGINE</b> - ГЛАВНЫЙ ДВИЖОК ИЮЛЯ</gold>" +
-            "<br><br><b><dark_green>Наш сайт</dark_green></b>: <u><click:open_url:'https://july.pp.ru/'>july.pp.ru</click></u>" +
-            "<br><green><b>Авторы</b></green>: " +
-            "<u><br><click:open_url:'https://somichev.dev/'>somichev.dev</click></u> - код" +
-            "<br>mrknrt - концепт, дизайн" +
-            "<br>nulla_quattuor - графика" +
-            "<br><b><green>Особые благодарности</green></b>:" +
-            "<br>dest0re - модуль климата и температур" +
-            "<br>0ocrop - оксидайзер" +
-            "<br>gafirudo_ - консультации, код" +
-            "<br>mirayyy - тестировка" +
-            "<br>metaquatura - создатель идеи Июля" +
-            "<br>Тюль Лени, mekval, Mr. У - спонсирование" +
-            "<br>Все подписчики <gold>Июль+</gold> и <dark_red>Июль++</dark_red>"
+class AboutCommandExecutor :
+    CommandExecutor,
+    TabCompleter {
+    private val aboutMsg =
+        "<br><gold>RADIO LAMP ENGINE</gold> - <aqua>КОНСТАНТА SMP ULTRA DELUXE EDITION</aqua>" +
+            "<br><click:open_url:'https://github.com/juj-team/RLEngine'><u><blue>[Оригинальный RLEngine]</blue></u></click>" +
+            "<br>Автор: <click:open_url:'https://somichev.dev'><u><blue>somichev.dev</blue></u></click>" +
+            "<br>Оригинальная идея: denbski, moss" +
+            "<br>Особые благодарности: oiknai"
 
-    override fun onCommand(sender: CommandSender, cmd: Command, alias: String, args: Array<String>): Boolean {
-        if(sender !is Player){
+    override fun onCommand(
+        sender: CommandSender,
+        cmd: Command,
+        alias: String,
+        args: Array<String>,
+    ): Boolean {
+        if (sender !is Player) {
             sender.sendMessage("Only players can use this command!")
             return true
         }
@@ -37,7 +36,10 @@ class AboutCommandExecutor: CommandExecutor, TabCompleter {
         return true
     }
 
-    override fun onTabComplete(sender: CommandSender, cmd: Command, alias: String, args: Array<String>): List<String> {
-        return listOf()
-    }
+    override fun onTabComplete(
+        sender: CommandSender,
+        cmd: Command,
+        alias: String,
+        args: Array<String>,
+    ): List<String> = listOf()
 }

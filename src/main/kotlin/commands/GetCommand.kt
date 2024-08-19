@@ -7,15 +7,17 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 
-class GetCommand: CommandExecutor, TabCompleter {
+class GetCommand :
+    CommandExecutor,
+    TabCompleter {
     override fun onCommand(
         sender: CommandSender,
         cmd: Command,
         alias: String,
         args: Array<String>,
     ): Boolean {
-        if(sender !is Player) return true
-        if(args.isEmpty()) return false
+        if (sender !is Player) return true
+        if (args.isEmpty()) return false
 
         val username = args[0]
         val player = sender.server.getPlayer(username) ?: return true
@@ -38,10 +40,11 @@ class GetCommand: CommandExecutor, TabCompleter {
         args: Array<String>,
     ): List<String> {
         if (args.size == 1) {
-            return sender.server.onlinePlayers.map { it.name }.filter { it.startsWith(args.last()) }
+            return sender.server.onlinePlayers
+                .map { it.name }
+                .filter { it.startsWith(args.last()) }
         }
 
         return RLEngineItems.getItems().filter { it.startsWith(args.last(), ignoreCase = true) }
     }
-
 }
