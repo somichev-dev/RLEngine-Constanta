@@ -1,0 +1,4 @@
+package items
+
+object CliffBootsItem {
+}
