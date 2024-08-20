@@ -18,6 +18,15 @@ object GliderItem : AbstractRLItem {
     override val baseItem: Material = Material.IRON_CHESTPLATE
     override val model: Int = 44301
     override val id: String = "glider"
+    override val itemGetterAction =
+        { _: ItemStack, resultMeta: ItemMeta, _: PersistentDataContainer ->
+            resultMeta.displayName(Component.text("Параглайдер", TextColor.color(250, 250, 250)))
+            resultMeta.lore(
+                listOf(
+                    Component.text("летает", TextColor.color(250, 250, 250)),
+                ),
+            )
+        }
 
     init {
         RLEngineTaskManager.runTask({
@@ -28,23 +37,6 @@ object GliderItem : AbstractRLItem {
                     chestPiece != null && compare(chestPiece)
                 }.forEach { onInventoryTick(it) }
         }, 2L, 10L)
-    }
-
-    override fun getItem(
-        result: ItemStack,
-        resultMeta: ItemMeta,
-        resultPDC: PersistentDataContainer,
-    ): ItemStack {
-        resultMeta.setCustomModelData(model)
-
-        resultMeta.displayName(Component.text("Параглайдер", TextColor.color(250, 250, 250)))
-        resultMeta.lore(
-            listOf(
-                Component.text("летает", TextColor.color(250, 250, 250)),
-            ),
-        )
-        result.setItemMeta(resultMeta)
-        return result
     }
 
     private fun onInventoryTick(player: Player) {
