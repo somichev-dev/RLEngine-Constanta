@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.somichev"
-version = "0.0.1"
+version = "0.0.2"
 description = "custom RLEngine fork for Constanta SMP"
 
 repositories {
