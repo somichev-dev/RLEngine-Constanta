@@ -12,6 +12,8 @@ interface AbstractRLItem : Listener {
     val baseItem: Material
     val model: Int
     val id: String
+    val itemGetterAction: (result: ItemStack, resultMeta: ItemMeta, resultPDC: PersistentDataContainer) -> Unit
+        get() = { _, _, _ -> }
 
     fun createItem() {
         RLEngineItems.registerItem(id, this)
@@ -22,9 +24,15 @@ interface AbstractRLItem : Listener {
         result: ItemStack = ItemStack(baseItem),
         resultMeta: ItemMeta = result.itemMeta,
         resultPDC: PersistentDataContainer = resultMeta.persistentDataContainer,
-    ): ItemStack
+    ): ItemStack {
+        resultMeta.setCustomModelData(model)
+        itemGetterAction(result, resultMeta, resultPDC)
+        result.setItemMeta(resultMeta)
+        return result
+    }
 
-    fun compare(other: ItemStack): Boolean {
+    fun compare(other: ItemStack?): Boolean {
+        other ?: return false
         if (!other.hasItemMeta()) return false
         val otherMeta = other.itemMeta
 

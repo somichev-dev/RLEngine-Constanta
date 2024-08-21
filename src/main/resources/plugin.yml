@@ -18,7 +18,7 @@ commands:
     permission: rl_engine.get
     aliases: [get]
     permission-message: ""
-    usage: "Usage: /get [id]"
+    usage: "Usage: /get [player] [id]"
   radiolamp:
     description: Radio Lamp Engine credits.
     permission: rl_engine.about
