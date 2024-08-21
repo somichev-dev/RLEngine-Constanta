@@ -13,6 +13,7 @@ object RLEngineItems {
              */
             GliderItem,
             CliffBootsItem,
+            ToolboxItem,
         )
 
     init {

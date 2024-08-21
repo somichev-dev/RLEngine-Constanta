@@ -8,6 +8,9 @@ import org.bukkit.NamespacedKey
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent
+import org.bukkit.event.inventory.CraftItemEvent
+import org.bukkit.event.inventory.PrepareAnvilEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.inventory.ItemStack
@@ -99,5 +102,36 @@ object CliffBootsItem : AbstractRLItem {
         if (event.isCancelled) return
         val item = event.item
         if (compare(item)) event.isCancelled = true
+    }
+
+    @EventHandler
+    fun onBootsRepair(event: PrepareAnvilEvent) {
+        val inv = event.inventory
+        if (!compare(inv.firstItem)) return
+        if (ToolboxItem.compare(inv.secondItem)) {
+            event.result = getItem()
+        }
+    }
+
+    @EventHandler
+    fun preventBootsRepair(event: PrepareAnvilEvent) {
+        val inv = event.inventory
+        if (!compare(inv.firstItem)) return
+        if (ToolboxItem.compare(inv.secondItem)) return
+        event.result = null
+    }
+
+    @EventHandler
+    fun preventBootsRepair(event: CraftItemEvent) {
+        if (event.inventory.matrix.any { compare(it) }) {
+            event.isCancelled = true
+        }
+    }
+
+    @EventHandler
+    fun preventBootsRepair(event: PrepareItemEnchantEvent) {
+        if (compare(event.item)) {
+            event.isCancelled = true
+        }
     }
 }
