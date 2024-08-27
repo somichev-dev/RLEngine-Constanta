@@ -2,6 +2,7 @@ package items
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
@@ -20,7 +21,12 @@ object GliderItem : AbstractRLItem {
     override val id: String = "glider"
     override val itemGetterAction =
         { _: ItemStack, resultMeta: ItemMeta, _: PersistentDataContainer ->
-            resultMeta.displayName(Component.text("Параглайдер", TextColor.color(250, 250, 250)))
+            resultMeta.displayName(
+                Component.text("Параглайдер", TextColor.color(250, 250, 250)).decoration(
+                    TextDecoration.ITALIC,
+                    false,
+                ),
+            )
             resultMeta.lore(
                 listOf(
                     Component.text("летает", TextColor.color(250, 250, 250)),
