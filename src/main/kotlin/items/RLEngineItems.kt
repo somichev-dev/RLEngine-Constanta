@@ -14,6 +14,7 @@ object RLEngineItems {
             GliderItem,
             CliffBootsItem,
             ToolboxItem,
+            TierTwoGliderItem,
         )
 
     init {

@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataContainer
 
 object ToolboxItem : AbstractRLItem {
     override val baseItem: Material = Material.IRON_INGOT
-    override val model: Int = 44301
+    override val model: Int = 44401
     override val id: String = "tool_box"
     override val itemGetterAction: (
         result: ItemStack,

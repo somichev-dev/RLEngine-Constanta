@@ -56,8 +56,8 @@ object CliffBootsItem : AbstractRLItem {
         boots.setItemMeta(bootsMeta)
     }
 
-    private fun getBootsDurability(boots: ItemStack): Int =
-        boots.itemMeta.persistentDataContainer.get(durabilityKey, PersistentDataType.INTEGER)!!
+    private fun getBootsDurability(boots: ItemStack): Int? =
+        boots.itemMeta.persistentDataContainer.get(durabilityKey, PersistentDataType.INTEGER)
 
     private fun checkIfInAir(p: Player): Boolean {
         val blockUnderFeet = p.location.block.getRelative(BlockFace.DOWN)
@@ -76,7 +76,8 @@ object CliffBootsItem : AbstractRLItem {
         val boots = p.inventory.boots ?: return
 
         val isCliffClimbing = p.isSneaking && compare(p.inventory.boots ?: return) && checkIfInAir(p)
-        val durabilityCheck = getBootsDurability(boots) > 0
+        val bootsDurability = getBootsDurability(boots) ?: return
+        val durabilityCheck = (bootsDurability) > 0
 
         val blockCheckDiffVector =
             when {
@@ -93,7 +94,7 @@ object CliffBootsItem : AbstractRLItem {
 
         if (isCliffClimbing && blockCheck && durabilityCheck && Random.nextInt(1, 12) < 10) {
             p.velocity = Vector(0.0, 0.3, 0.0)
-            setBootsDurability(boots, getBootsDurability(boots) - 1)
+            setBootsDurability(boots, bootsDurability - 1)
         }
     }
 
