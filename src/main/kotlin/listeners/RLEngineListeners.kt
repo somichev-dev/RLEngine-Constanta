@@ -5,17 +5,17 @@ import org.bukkit.event.Listener
 
 object RLEngineListeners {
     private val knownListeners =
-        listOf<Listener>()
+        listOf<Listener>(CactusShaveListener)
 
     init {
         registerKnownListeners()
     }
 
-    private fun registerKnownListeners()  {
+    private fun registerKnownListeners() {
         knownListeners.forEach { register(it) }
     }
 
-    fun register(listener: Listener)  {
+    fun register(listener: Listener) {
         Bukkit.getPluginManager().registerEvents(listener, RadioLampEngine.instance)
     }
 }
