@@ -3,9 +3,8 @@
 name: create release on tag
 on:
   push:
-    branches: [ "master" ]
     tags:
-      - "v*.*.*"
+    - "v*"
 
 jobs:
   create_release:
@@ -29,9 +28,9 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
-      - name: store version
-        run: echo "name=proj_ver::$(./gradlew --console plain -q printVersionName)" >> $GITHUB_OUTPUT
+      - name: capture version name
+        run: echo "VERSION_NAME=$(./gradlew --console plain -q printVersionName)" >> "$GITHUB_ENV"
       - name: create release
         uses: softprops/action-gh-release@v2
         with:
-          files: "build/libs/RLEngine-${{env.proj_ver}}.jar"
+          files: "build/libs/RLEngine-${{ env.VERSION_NAME }}.jar"
