@@ -5,10 +5,10 @@ import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.Lightable
 import org.bukkit.entity.Player
-import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
 import util.RLEngineTaskManager
+import kotlin.random.Random
 
 object TierTwoGliderItem : AbstractRLItem {
     override val baseItem: Material = Material.IRON_CHESTPLATE
@@ -62,8 +63,6 @@ object TierTwoGliderItem : AbstractRLItem {
 
     @EventHandler
     fun onTntUse(event: PlayerInteractEvent) {
-        if (event.useItemInHand() == Event.Result.DENY) return
-
         val item = event.item ?: return
         val action = event.action
         val player = event.player
@@ -73,9 +72,16 @@ object TierTwoGliderItem : AbstractRLItem {
             item.type == Material.TNT &&
             action in listOf(Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK) &&
             compare(chestplate) &&
-            player.hasPotionEffect(PotionEffectType.SLOW_FALLING)
+            player.hasPotionEffect(PotionEffectType.LEVITATION)
         ) {
-            player.velocity.add(Vector(0.0, 1.0, 0.0))
+            player.world.playSound(
+                player.location,
+                Sound.ENTITY_GENERIC_EXPLODE,
+                2.0f,
+                Random.nextFloat() * 0.4f + 0.8f,
+            )
+            player.velocity = player.velocity.add(Vector(0.0, 1.0, 0.0))
+            item.amount--
         }
     }
 }
