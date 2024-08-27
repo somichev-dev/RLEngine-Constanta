@@ -1,12 +1,9 @@
-
 import commands.AboutCommandExecutor
 import commands.GetCommand
 import items.RLEngineItems
 import listeners.RLEngineListeners
 import org.bukkit.Bukkit
-import org.bukkit.NamespacedKey
 import org.bukkit.command.CommandExecutor
-import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import util.RLEngineTaskManager
@@ -36,14 +33,6 @@ class RadioLampEngine : JavaPlugin() {
     }
 
     override fun onDisable() {
-        // remove all weather locks
-        Bukkit.getWorlds().forEach {
-            it.persistentDataContainer.set(
-                NamespacedKey("rle", "weathering"),
-                PersistentDataType.BOOLEAN,
-                false,
-            )
-        }
         // cancel all tasks
         Bukkit.getScheduler().cancelTasks(this)
     }
